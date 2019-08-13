@@ -1,0 +1,18 @@
+﻿@model int
+
+<td style="width: 150px">
+    <div class="btn-group">
+        <a class="btn btn-primary text-white" asp-action="Edit" asp-route-CategoryID="@Model">
+            
+            <i class="fa fa-edit"></i>
+        </a>
+        <a class="btn btn-success text-white" asp-action="Details" asp-route-CategoryID="@Model">
+           
+            <i class="fa fa-list"></i>
+        </a>
+        <a class="btn btn-Delete text-white" style="background: #ff0000" asp-action="Delete" asp-route-CategoryID="@Model">
+            
+            <i class="fa fa-trash text-white"></i>
+        </a>
+    </div>
+</td>

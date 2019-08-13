@@ -1,0 +1,58 @@
+﻿@model IEnumerable<SubCategory>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+<div>
+    <div class="border border-white">
+        <div class="row">
+            <div class="col-6">
+                <h2 class="text-info">SubCategory List</h2>
+            </div>
+            <div class="col-6 text-right">
+           <partial name="_CreateButton"/>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div>
+        <table class="table table-striped border">
+            @if (Model.Count() > 0)
+            {
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(name => name.Name);
+                    </th>
+                    <th>
+                                            <th>
+                        @Html.DisplayNameFor(name => name.Category.Name);
+                    </th>
+                    
+                    <th>
+
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(category => item.Name)</td>
+                        <td>
+                            <partial name="_ButtonPartialsForSubCategory" model="item.ID" />
+                        </td>
+
+                    </tr>
+                }}
+            else
+            {
+                <p>
+                    No Sub Category!!!
+                </p>
+            }
+        </table>
+    </div>
+</div>
