@@ -33,6 +33,32 @@ namespace Cafe.Migrations
                     b.ToTable("Categoris");
                 });
 
+            modelBuilder.Entity("Cafe.Models.MenuItem", b =>
+                {
+                    b.Property<int>("ID");
+
+                    b.Property<int>("CategoryID");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Image");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<double>("Price");
+
+                    b.Property<int>("SubCategoryID");
+
+                    b.Property<int>("Taste");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("MenuItems");
+                });
+
             modelBuilder.Entity("Cafe.Models.SubCategory", b =>
                 {
                     b.Property<int>("ID")
@@ -214,6 +240,19 @@ namespace Cafe.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Cafe.Models.MenuItem", b =>
+                {
+                    b.HasOne("Cafe.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Cafe.Models.SubCategory", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("ID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Cafe.Models.SubCategory", b =>
