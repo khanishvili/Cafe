@@ -105,37 +105,162 @@ namespace Cafe.Areas.Admin.Controllers
                 SubCategory = subCategory,
                 SubCategoryListName = dbContext.SubCategories.OrderBy(sub => sub.Name).Select(sub => sub.Name).Distinct().ToList()
             };
+
             return View(model);
         }
-        // EDIT post
+        
+        //EDIT
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int ID, SubCategoryandCategoryModel submodel)
+       public async Task<IActionResult> Edit(int ID,SubCategoryandCategoryModel model)
         {
+
+
             if (ModelState.IsValid)
             {
-                var categoryExists = dbContext.SubCategories
-                    .Include(sub => sub.Category)
-                    .Where(s => s.Name == submodel.SubCategory.Name && s.CategoryID == submodel.SubCategory.ID);
-                if (categoryExists.Count() > 0)
+
+                var subCategoryExists = dbContext.SubCategories
+                                        .Include(s => s.Category)
+                                        .Where(s => s.Name == model.SubCategory.Name &&
+                                                             s.Category.CategoryID == model.SubCategory.ID);
+
+                if (subCategoryExists.Count() > 0)
                 {
-                    StatusMessage = "Error" + submodel.SubCategory.Name + "Already Exists!";
-                }
+                    StatusMessage = "Error : Sub Category exist under" + subCategoryExists.First().Category.Name;
+                   
+                }   
+
                 else
                 {
-                    dbContext.SubCategories.Add(submodel.SubCategory);
-                    dbContext.SaveChanges();
-                    return RedirectToAction(nameof(Index));
+                    var subCatFromDB = await dbContext.SubCategories.FindAsync(ID);
+
+                    subCatFromDB.Name = model.SubCategory.Name;
+
+                   await dbContext.SaveChangesAsync();
+
+                   return RedirectToAction(nameof(Index));
                 }
+
+
             }
+
             var _model = new SubCategoryandCategoryModel()
             {
                 Categories = dbContext.Categoris.ToList(),
-                SubCategory = submodel.SubCategory,
+                SubCategory = model.SubCategory,
                 SubCategoryListName = dbContext.SubCategories.OrderBy(sub => sub.Name).Select(s => s.Name).ToList(),
                 StatusMessage = StatusMessage
             };
             return View(_model);
+
+
         }
+    
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? ID)
+        {
+            if (ID == null)
+            {
+                return NotFound();
+            }
+
+            var subCategory = await dbContext.SubCategories.SingleOrDefaultAsync(sub => sub.ID == ID);
+
+            if (subCategory == null)
+            {
+                return NotFound();
+            }
+
+            SubCategoryandCategoryModel model = new SubCategoryandCategoryModel()
+            {
+                Categories = dbContext.Categoris.ToList(),
+                SubCategory = subCategory,
+                SubCategoryListName = dbContext.SubCategories.OrderBy(sub => sub.Name).Select(sub => sub.Name).Distinct().ToList()
+            };
+
+            return View(model);
+        }
+        
+        //EDIT
+        [HttpPost]
+       public async Task<IActionResult> Delete(int ID,SubCategoryandCategoryModel model)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+
+                var subCategoryExists = dbContext.SubCategories
+                                        .Include(s => s.Category)
+                                        .Where(s => s.Name == model.SubCategory.Name &&
+                                                             s.Category.CategoryID == model.SubCategory.ID);
+
+                if (subCategoryExists.Count() > 0)
+                {
+                    StatusMessage = "Error : Sub Category exist under" + subCategoryExists.First().Category.Name;
+                   
+                }   
+
+                else
+                {
+                    var subCatFromDB = await dbContext.SubCategories.FindAsync(ID);
+
+                    dbContext.SubCategories.Remove(subCatFromDB);
+
+                   await dbContext.SaveChangesAsync();
+
+                   return RedirectToAction(nameof(Index));
+                }
+
+
+            }
+
+            var _model = new SubCategoryandCategoryModel()
+            {
+                Categories = dbContext.Categoris.ToList(),
+                SubCategory = model.SubCategory,
+                SubCategoryListName = dbContext.SubCategories.OrderBy(sub => sub.Name).Select(s => s.Name).ToList(),
+                StatusMessage = StatusMessage
+            };
+            return View(_model);
+
+
+        }
+    
+      
+      
+      
+        //// EDIT post
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Edit(int ID, SubCategoryandCategoryModel submodel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var categoryExists = dbContext.SubCategories
+        //            .Include(sub => sub.Category)
+        //            .Where(s => s.Name == submodel.SubCategory.Name && s.CategoryID == submodel.SubCategory.ID);
+        //        if (categoryExists.Count() > 0)
+        //        {
+        //            StatusMessage = "Error" + submodel.SubCategory.Name + "Already Exists!";
+        //        }
+        //        else
+        //        {
+        //            dbContext.SubCategories.Add(submodel.SubCategory);
+        //            dbContext.SaveChanges();
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //    }
+        //    var _model = new SubCategoryandCategoryModel()
+        //    {
+        //        Categories = dbContext.Categoris.ToList(),
+        //        SubCategory = SubCategory,
+        //        SubCategoryListName = dbContext.SubCategories.OrderBy(sub => sub.Name).Select(s => s.Name).ToList(),
+        //        StatusMessage = StatusMessage
+        //    };
+        //    return View(_model);
+        //}
+
+
+
     }
 }

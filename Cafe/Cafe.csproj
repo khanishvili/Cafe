@@ -57,6 +57,7 @@
     <None Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <None Include="Areas\Admin\Views\Category\Index.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Create.cshtml" />
+    <None Include="Areas\Admin\Views\SubCategory\Delete.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Edit.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Index.cshtml" />
   </ItemGroup>

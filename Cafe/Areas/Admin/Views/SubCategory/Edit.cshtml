@@ -20,7 +20,9 @@
                     <label asp-for="SubCategory.CategoryID" class="col-form-label"></label>
                 </div>
                 <div class="col-5">
-                   
+                    <select id="categoryLists" asp-for="SubCategory.CategoryID"
+                         disabled   asp-items="Model.Categories.ToSelectListItem(Model.SubCategory.CategoryID)"
+                            class="form-control"></select>
                 </div>
                 <span asp-validation-for="SubCategoryListName" class="text-danger"></span>
             </div>
@@ -86,9 +88,7 @@
         $(document).ready(function () {
             updateSubCategoryList();
         });
-        $("#categoryLists").on("change", function () {
-            updateSubCategoryList();
-        });
+     
 
     </script>
 }

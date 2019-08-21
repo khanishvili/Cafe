@@ -22,6 +22,7 @@ namespace Cafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+
             return View();
         }
         //Create Category
@@ -41,6 +42,7 @@ namespace Cafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int? categoryID)
         {
+
             if (categoryID != null)
             {
                 Category model = dbContext.Categoris.Find(categoryID);
