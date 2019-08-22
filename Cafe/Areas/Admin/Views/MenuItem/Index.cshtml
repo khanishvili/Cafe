@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MenuItem>
+@{
+    ViewData["Title"] = "Menu Items";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Menu Items</h1>
+
+<div>
+    <div class="border border-white">
+        <div class="row">
+            <div class="col-6">
+                <h2 class="text-info">Menu Items</h2>
+            </div>
+            <div class="col-6 text-right">
+                <partial name="_CreateButton" />
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div>
+        <table class="table table-striped border">
+            @if (Model.Count() > 0)
+            {
+            <tr class="table-secondary">
+                <th>
+                    @Html.DisplayNameFor(name => name.Name);
+                </th>
+                <th>
+                    @Html.DisplayNameFor(name => name.Price);
+                </th>
+                <th>
+                    @Html.DisplayNameFor(name => name.CategoryID);
+                </th>
+                <th>
+                    @Html.DisplayNameFor(name => name.SubCategoryID);
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+
+                @foreach (var item in Model)
+                {
+            <tr>
+                <td>@Html.DisplayFor(category => item.Name)</td>
+                <td>@Html.DisplayFor(category => item.Price)</td>
+                <td>@Html.DisplayFor(category => item.Category.Name)</td>
+                <td>@Html.DisplayFor(category => item.SubCategory.Name)</td>
+                <td>
+                    <partial name="_ButtonPartialForCategory" model="item.CategoryID" />
+                </td>
+
+            </tr>
+                }}
+            else
+            {
+                <p>
+                    No Menu Items Yet!!!
+                </p>
+            }
+        </table>
+    </div>
+</div>

@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuItemController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubCategoryController.cs" />
   </ItemGroup>
 
@@ -56,6 +57,8 @@
     <None Include="Areas\Admin\Views\Category\Delete.cshtml" />
     <None Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <None Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <None Include="Areas\Admin\Views\MenuItem\Create.cshtml" />
+    <None Include="Areas\Admin\Views\MenuItem\Index.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Create.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Delete.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Edit.cshtml" />
