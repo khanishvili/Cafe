@@ -19,9 +19,9 @@
                     <label asp-for="SubCategory.CategoryID" class="col-form-label"></label>
                 </div>
                 <div class="col-5">
-                    <select id="categoryLists" asp-for="SubCategory.CategoryID" 
-                     asp-items="Model.Categories.ToSelectListItem(Model.SubCategory.CategoryID)"
-                        class="form-control"></select>
+                    <select id="categoryLists" asp-for="SubCategory.CategoryID"
+                            asp-items="Model.Categories.ToSelectListItem(Model.SubCategory.CategoryID)"
+                            class="form-control"></select>
                 </div>
                 <span asp-validation-for="SubCategoryListName" class="text-danger"></span>
             </div>
@@ -47,7 +47,7 @@
         @if (Model.SubCategoryListName.Count() > 0)
         {
             <p>
-                Existing SubCategories 
+                Existing SubCategories
             </p>
             <div id="SubCategoryListName">
                 <ul class="list-group"></ul>
@@ -58,7 +58,7 @@
 
 </div>
 
-@section Scripts{ 
+@section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
 
@@ -78,7 +78,7 @@
                     $list.append(' <ul class="list-group">');
                     for (i in results) {
                         $list.append('<li class="list-group-item">' + results[i].text + '</li>');
-                      
+
                     }
                     $list.append('</ul>');
                 }
@@ -92,4 +92,8 @@
         });
 
     </script>
+ 
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  
+
 }

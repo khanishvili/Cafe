@@ -23,40 +23,40 @@
         <table class="table table-striped border">
             @if (Model.Count() > 0)
             {
-            <tr class="table-secondary">
-                <th>
-                    @Html.DisplayNameFor(name => name.Name);
-                </th>
-                <th>
-                    @Html.DisplayNameFor(name => name.Price);
-                </th>
-                <th>
-                    @Html.DisplayNameFor(name => name.CategoryID);
-                </th>
-                <th>
-                    @Html.DisplayNameFor(name => name.SubCategoryID);
-                </th>
-                <th>
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(name => name.Name);
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(name => name.Price);
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(name => name.CategoryID);
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(name => name.SubCategoryID);
+                    </th>
+                    <th>
 
-                </th>
-                <th>
+                    </th>
+                    <th>
 
-                </th>
+                    </th>
 
-            </tr>
+                </tr>
 
                 @foreach (var item in Model)
                 {
-            <tr>
-                <td>@Html.DisplayFor(category => item.Name)</td>
-                <td>@Html.DisplayFor(category => item.Price)</td>
-                <td>@Html.DisplayFor(category => item.Category.Name)</td>
-                <td>@Html.DisplayFor(category => item.SubCategory.Name)</td>
-                <td>
-                    <partial name="_ButtonPartialForCategory" model="item.CategoryID" />
-                </td>
+                    <tr>
+                        <td>@Html.DisplayFor(category => item.Name)</td>
+                        <td>@Html.DisplayFor(category => item.Price)</td>
+                        <td>@Html.DisplayFor(category => item.Category.Name)</td>
+                        <td>@Html.DisplayFor(category => item.SubCategory.Name)</td>
+                        <td>
+                            <partial name="_ButtonPartialForCategory" model="item.CategoryID" />
+                        </td>
 
-            </tr>
+                    </tr>
                 }}
             else
             {
@@ -67,3 +67,6 @@
         </table>
     </div>
 </div>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
