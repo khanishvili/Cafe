@@ -5,23 +5,36 @@ namespace Cafe.Models
 {
     public class MenuItem
     {
-        public int ID { get; set; }
+
+        public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
-        public string Description { get; set; }
-        public Taste Taste { get; set; }
+        public string Descritptions { get; set; }
+
+        public string SpiCyness { get; set; }
+
+        public enum ESpicy { NA = 0, NotSpicy = 1, Spicy = 2, VerySpicy = 3 }
+
         public string Image { get; set; }
-        [Display(Name = "Category")]
-        public int CategoryID { get; set; }
-        [Display(Name = "SubCategory")]
-        public int SubCategoryID { get; set; }
-        [Range(1, int.MaxValue, ErrorMessage = "Price must to be greate then 1$")]
-        public double Price { get; set; }
-               
+
+        [Display(Name="Category")]
+        public int CategoryId { get; set; }
+
         [ForeignKey("CategoryID")]
         public virtual Category Category { get; set; }
 
+        [Display(Name = "SubCategory")]
+        public int SubCategoryId { get; set; }
         [ForeignKey("ID")]
         public virtual SubCategory SubCategory { get; set; }
+
+
+        [Range(1,int.MaxValue,ErrorMessage ="Price Should Be greated than $1")]
+        public double Price { get; set; }
+
+
+
     }
+
 }

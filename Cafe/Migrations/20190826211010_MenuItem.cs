@@ -2,7 +2,7 @@
 
 namespace Cafe.Migrations
 {
-    public partial class menuItems : Migration
+    public partial class MenuItem : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
