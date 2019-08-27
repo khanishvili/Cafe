@@ -1,0 +1,132 @@
+﻿@model Cafe.Models.ViewModels.MenuViewModel
+@using Cafe.Extension
+@{
+    ViewData["Title"] = "Edit-MenuITEM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Menu Item!</h1>
+<form method="post" enctype="multipart/form-data" asp-action="Edit">
+    <div class="align-content-center row">
+        <input type="hidden" asp-for="MenuItem.ID" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col--8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Name" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MenuItem.Name" class="form-control" />
+                </div>
+                <span asp-validation-for="MenuItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Description" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    @Html.TextAreaFor(m => m.MenuItem.Description)
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Price" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MenuItem.Price" class="form-control" />
+                </div>
+                <span asp-validation-for="MenuItem.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Image" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input type="file" name="files" multiple class="form-control" />
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.CategoryID" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="@Model.MenuItem.CategoryID" id="CategoryID"
+                            asp-items="Model.Category.ToSelectListItem(Model.MenuItem.CategoryID)"
+                            class="form-control"></select>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.SubCategoryID" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="@Model.MenuItem.SubCategoryID" id="SubCategoryID" name="SubCategoryID"
+                            asp-items="Model.SubCategories.ToSelectListItem(Model.MenuItem.SubCategoryID)"
+                            class="form-control"></select>
+                    @*asp-items="@(new SelectList(string.Empty, "ID", "Name"))"*@
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Taste" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="MenuItem.Taste" asp-items="Html.GetEnumSelectList<Taste>()" class="form-control"></select>
+                </div>
+
+            </div>
+            <div class="col-8 offset-4 ">
+                <partial name="_EditBackToListButton" model="Model.MenuItem.ID" />
+            </div>
+        </div>
+
+
+        <div class="col--3 offset-1">
+
+            <img src="@Model.MenuItem.Image" style="border-radius: 50px; border: 1px solid #bb1099; width: 200px;height: 200px;" alt="@Model.MenuItem.Name" />
+        </div>
+
+
+    </div>
+</form>
+@section Scripts{
+    <script type="text/javascript">
+    $(document).ready(
+        function () {
+            $('#CategoryID').change(function () {
+                getSubCategory();
+            });
+        }
+    );
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+
+            var ddlSource = '#CategoryID';
+            $.getJSON(url, {
+                id: $(ddlSource).val()
+            }, function (data) {
+                var items = "";
+                $('#SubCategoryID').empty();
+                $.each(data, function (i, subcategory) {
+                items += "<option value=" + subcategory.value + ">" + subcategory.text + "</option>"
+
+                    console.log(subcategory.text);
+
+                });
+                $('#SubCategoryID').html(items);
+
+                })
+
+    }
+
+
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

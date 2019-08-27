@@ -64,6 +64,7 @@
     <None Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <None Include="Areas\Admin\Views\Category\Index.cshtml" />
     <None Include="Areas\Admin\Views\MenuItem\Create.cshtml" />
+    <None Include="Areas\Admin\Views\MenuItem\Edit.cshtml" />
     <None Include="Areas\Admin\Views\MenuItem\Index.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Create.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Delete.cshtml" />

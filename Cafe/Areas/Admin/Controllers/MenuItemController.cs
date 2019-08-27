@@ -11,7 +11,7 @@ using Cafe.Data;
 using Cafe.Models;
 using Cafe.Models.ViewModels;
 using Cafe.Utility;
-
+using System.Linq;
 
 namespace Cafe.Areas.Admin.Controllers
 {
@@ -104,6 +104,81 @@ namespace Cafe.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+
+
+        //Edit - 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            MenuViewModel.MenuItem = await dbContext.MenuItems.Include(s => s.Category).Include(sub => sub.SubCategory).SingleOrDefaultAsync(m => m.ID == id);
+            MenuViewModel.SubCategories = await dbContext.SubCategories.Where(s => s.CategoryID == MenuViewModel.MenuItem.SubCategoryID).ToListAsync();
+
+            if (MenuViewModel.MenuItem == null)
+            {
+                NotFound();
+            }
+
+
+
+            return View(MenuViewModel);
+        }
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EdiPost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+
+            MenuViewModel.MenuItem.SubCategoryID = Convert.ToInt32(Request.Form["SubCategoryID"].ToString());
+            if (!ModelState.IsValid)
+            {
+                return View(MenuViewModel);
+            }
+            dbContext.MenuItems.Add(MenuViewModel.MenuItem);
+            await dbContext.SaveChangesAsync();
+            //Saving Image Section
+
+            string WebRootPath = hostingEnvironment.WebRootPath;
+            Microsoft.AspNetCore.Http.IFormFileCollection files = HttpContext.Request.Form.Files;
+            MenuItem menuItemFromDb = await dbContext.MenuItems.FindAsync(MenuViewModel.MenuItem.ID);
+
+            if (files.Count > 0)
+
+            {
+                // files has been uploaded
+                string uploads = Path.Combine(WebRootPath, "images");
+                string extension = Path.GetExtension(files[0].FileName);
+                using (FileStream fileStream = new FileStream(Path.Combine(uploads, MenuViewModel.MenuItem.ID + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+
+                menuItemFromDb.Image = @"\images\" + MenuViewModel.MenuItem.ID + extension;
+            }
+            else
+            {
+                //no files was uploaded
+
+                var uploads = Path.Combine(WebRootPath, @"\images\" + SD.DefaultFoodImage);
+                System.IO.File.Copy(uploads, WebRootPath + @"\images\" + MenuViewModel.MenuItem.ID + ".jpg");
+                menuItemFromDb.Image = @"\images\" + MenuViewModel.MenuItem.ID + ".jpg";
+            }
+            await dbContext.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
 
     }
 }
