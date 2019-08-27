@@ -18,7 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190827034431_InitialMenuItem.cs" />
+    <Compile Remove="Migrations\20190827034431_InitialMenuItem.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuItemController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubCategoryController.cs" />
   </ItemGroup>
 
@@ -48,6 +54,7 @@
     <Folder Include="Areas\Customer\Data\" />
     <Folder Include="Areas\Customer\Models\" />
     <Folder Include="Controllers\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 
@@ -56,6 +63,8 @@
     <None Include="Areas\Admin\Views\Category\Delete.cshtml" />
     <None Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <None Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <None Include="Areas\Admin\Views\MenuItem\Create.cshtml" />
+    <None Include="Areas\Admin\Views\MenuItem\Index.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Create.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Delete.cshtml" />
     <None Include="Areas\Admin\Views\SubCategory\Edit.cshtml" />

@@ -18,6 +18,7 @@ namespace Cafe.Areas.Admin.Controllers
 
         [TempData]
         public string StatusMessage { get; set; }
+        
         public SubCategoryController(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;

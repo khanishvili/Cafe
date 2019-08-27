@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cafe.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190821054637_menuItems")]
-    partial class menuItems
+    [Migration("20190827034827_MenuItem")]
+    partial class MenuItem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,36 @@ namespace Cafe.Migrations
                     b.HasKey("CategoryID");
 
                     b.ToTable("Categoris");
+                });
+
+            modelBuilder.Entity("Cafe.Models.MenuItem", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryID");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Image");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<double>("Price");
+
+                    b.Property<int>("SubCategoryID");
+
+                    b.Property<int>("Taste");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("SubCategoryID");
+
+                    b.ToTable("MenuItems");
                 });
 
             modelBuilder.Entity("Cafe.Models.SubCategory", b =>
@@ -216,6 +246,19 @@ namespace Cafe.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Cafe.Models.MenuItem", b =>
+                {
+                    b.HasOne("Cafe.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Cafe.Models.SubCategory", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Cafe.Models.SubCategory", b =>

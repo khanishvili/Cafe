@@ -1,15 +1,16 @@
-﻿@model IEnumerable<SubCategory>
+﻿@model IEnumerable<MenuItem>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Menu Items";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Menu Items</h1>
+
 <div>
     <div class="border border-white">
         <div class="row">
             <div class="col-6">
-                <h2 class="text-info">SubCategory List</h2>
+                <h2 class="text-info">Menu Items</h2>
             </div>
             <div class="col-6 text-right">
                 <partial name="_CreateButton" />
@@ -27,10 +28,17 @@
                         @Html.DisplayNameFor(name => name.Name);
                     </th>
                     <th>
-                    <th>
-                        @Html.DisplayNameFor(name => name.Category.Name);
+                        @Html.DisplayNameFor(name => name.Price);
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(name => name.CategoryID);
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(name => name.SubCategoryID);
+                    </th>
+                    <th>
 
+                    </th>
                     <th>
 
                     </th>
@@ -41,8 +49,11 @@
                 {
                     <tr>
                         <td>@Html.DisplayFor(category => item.Name)</td>
+                        <td>@Html.DisplayFor(category => item.Price)</td>
+                        <td>@Html.DisplayFor(category => item.Category.Name)</td>
+                        <td>@Html.DisplayFor(category => item.SubCategory.Name)</td>
                         <td>
-                            <partial name="_ButtonPartialsForSubCategory" model="item.ID" />
+                            <partial name="_ButtonPartialForCategory" model="item.CategoryID" />
                         </td>
 
                     </tr>
@@ -50,7 +61,7 @@
             else
             {
                 <p>
-                    No Sub Category!!!
+                    No Menu Items Yet!!!
                 </p>
             }
         </table>
