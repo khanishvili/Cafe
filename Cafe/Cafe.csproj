@@ -18,6 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190827034431_InitialMenuItem.cs" />
+    <Compile Remove="Migrations\20190827034431_InitialMenuItem.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuItemController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubCategoryController.cs" />

@@ -35,7 +35,9 @@ namespace Cafe.Migrations
 
             modelBuilder.Entity("Cafe.Models.MenuItem", b =>
                 {
-                    b.Property<int>("ID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CategoryID");
 
@@ -55,6 +57,8 @@ namespace Cafe.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryID");
+
+                    b.HasIndex("SubCategoryID");
 
                     b.ToTable("MenuItems");
                 });
@@ -251,7 +255,7 @@ namespace Cafe.Migrations
 
                     b.HasOne("Cafe.Models.SubCategory", "SubCategory")
                         .WithMany()
-                        .HasForeignKey("ID")
+                        .HasForeignKey("SubCategoryID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

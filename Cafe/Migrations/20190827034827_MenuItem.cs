@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cafe.Migrations
 {
-    public partial class menuItem : Migration
+    public partial class MenuItem : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,7 +11,8 @@ namespace Cafe.Migrations
                 name: "MenuItems",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false),
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Taste = table.Column<int>(nullable: false),
@@ -29,8 +31,8 @@ namespace Cafe.Migrations
                         principalColumn: "CategoryID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_MenuItems_SubCategories_ID",
-                        column: x => x.ID,
+                        name: "FK_MenuItems_SubCategories_SubCategoryID",
+                        column: x => x.SubCategoryID,
                         principalTable: "SubCategories",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.NoAction);
@@ -40,6 +42,11 @@ namespace Cafe.Migrations
                 name: "IX_MenuItems_CategoryID",
                 table: "MenuItems",
                 column: "CategoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuItems_SubCategoryID",
+                table: "MenuItems",
+                column: "SubCategoryID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

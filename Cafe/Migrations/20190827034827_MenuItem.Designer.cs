@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cafe.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190821055407_menuItem")]
-    partial class menuItem
+    [Migration("20190827034827_MenuItem")]
+    partial class MenuItem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,7 +37,9 @@ namespace Cafe.Migrations
 
             modelBuilder.Entity("Cafe.Models.MenuItem", b =>
                 {
-                    b.Property<int>("ID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CategoryID");
 
@@ -57,6 +59,8 @@ namespace Cafe.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryID");
+
+                    b.HasIndex("SubCategoryID");
 
                     b.ToTable("MenuItems");
                 });
@@ -253,7 +257,7 @@ namespace Cafe.Migrations
 
                     b.HasOne("Cafe.Models.SubCategory", "SubCategory")
                         .WithMany()
-                        .HasForeignKey("ID")
+                        .HasForeignKey("SubCategoryID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

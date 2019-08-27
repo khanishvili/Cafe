@@ -71,8 +71,8 @@ namespace Cafe.Areas.Admin.Controllers
                 return View(MenuViewModel);
             }
             dbContext.MenuItems.Add(MenuViewModel.MenuItem);
-            //await dbContext.SaveChangesAsync();
-                     //Saving Image Section
+            await dbContext.SaveChangesAsync();
+            //Saving Image Section
 
             string WebRootPath = hostingEnvironment.WebRootPath;
             Microsoft.AspNetCore.Http.IFormFileCollection files = HttpContext.Request.Form.Files;
